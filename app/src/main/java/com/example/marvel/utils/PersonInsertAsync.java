@@ -1,18 +1,21 @@
-package com.example.marvel;
+package com.example.marvel.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
+
+import com.example.marvel.models.Person;
+import com.example.marvel.database.Connections;
+import com.example.marvel.interfaces.AsyncTaskCallback;
 
 import java.util.List;
 
-public class InsertPersonAsync implements Runnable {
+public class PersonInsertAsync implements Runnable {
     private Context context;
     private AsyncTaskCallback callback;
     private List<Person> persons;
     private  Activity activity;
 
-    public InsertPersonAsync (List<Person> persons, Context context, Activity activity, AsyncTaskCallback callback)
+    public PersonInsertAsync(List<Person> persons, Context context, Activity activity, AsyncTaskCallback callback)
     {
         this.context = context;
         this.callback = callback;

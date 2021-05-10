@@ -1,4 +1,4 @@
-package com.example.marvel;
+package com.example.marvel.database;
 
 import android.content.Context;
 

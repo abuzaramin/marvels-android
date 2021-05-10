@@ -1,4 +1,4 @@
-package com.example.marvel;
+package com.example.marvel.interfaces;
 
 public interface AsyncTaskCallback <T>
 {

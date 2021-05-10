@@ -1,10 +1,12 @@
-package com.example.marvel;
+package com.example.marvel.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import com.example.marvel.R;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -17,12 +19,12 @@ public class StartActivity extends AppCompatActivity {
         Boolean isLogin = prefs.getBoolean("isLogin", false);
 
         if (isLogin) {
-            Intent detailIntent = new Intent(StartActivity.this, com.example.marvel.MainActivity.class);
+            Intent detailIntent = new Intent(StartActivity.this, MainActivity.class);
             startActivity(detailIntent);
         }
         else
         {
-            Intent detailIntent = new Intent(StartActivity.this, com.example.marvel.LoginActivity.class);
+            Intent detailIntent = new Intent(StartActivity.this, LoginActivity.class);
             startActivity(detailIntent);
         }
     }

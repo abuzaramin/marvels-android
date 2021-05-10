@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LoginActivity" android:noHistory="true"></activity>
-        <activity android:name=".StartActivity" android:noHistory="true">
+        <activity android:name=".activities.LoginActivity" android:noHistory="true"></activity>
+        <activity android:name=".activities.StartActivity" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,10 +21,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailsActivity"
+            android:name=".activities.DetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".DetailActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.DetailActivity" />
+        <activity android:name=".activities.MainActivity">
 
         </activity>
     </application>

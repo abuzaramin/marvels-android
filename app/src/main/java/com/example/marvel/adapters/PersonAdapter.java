@@ -1,7 +1,6 @@
-package com.example.marvel;
+package com.example.marvel.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Icon;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.marvel.R;
+import com.example.marvel.models.Person;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

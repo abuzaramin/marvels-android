@@ -1,12 +1,15 @@
-package com.example.marvel;
+package com.example.marvel.activities;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.marvel.models.Person;
+import com.example.marvel.interfaces.PersonDAO;
+import com.example.marvel.R;
+import com.example.marvel.database.Connections;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package com.example.marvel;
+package com.example.marvel.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +14,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.io.Serializable;
+import com.example.marvel.network.NetworkClient;
+import com.example.marvel.models.Person;
+import com.example.marvel.adapters.PersonAdapter;
+import com.example.marvel.interfaces.PersonDAO;
+import com.example.marvel.R;
+import com.example.marvel.database.Connections;
+import com.example.marvel.interfaces.AsyncTaskCallback;
+import com.example.marvel.interfaces.DataService;
+import com.example.marvel.utils.PersonInsertAsync;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -24,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements PersonAdapter.ItemClicked{
+public class MainActivity extends AppCompatActivity implements PersonAdapter.ItemClicked {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter myAdapter;
@@ -53,9 +62,15 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
         progressDoalog.setMessage("Loading....");
         progressDoalog.show();
 
+        List <Person> list = personDAO.getAllPersons();
+        if (list.size() > 0) {
+            marvels.clear();
+            marvels.addAll(list);
+            myAdapter.notifyDataSetChanged();
+        }
 
-        /*Create handle for the RetrofitInstance interface*/
-        GetDataService service = NetworkClient.getRetrofitInstance().create(GetDataService.class);
+
+        DataService service = NetworkClient.getRetrofitInstance().create(DataService.class);
         Call<List<Person>> call = service.getAllData();
         call.enqueue(new Callback<List<Person>>() {
             @Override
@@ -102,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
     @Override
     public void onItemClicked(int index) {
 
-        Intent detailIntent = new Intent(MainActivity.this, com.example.marvel.DetailsActivity.class);
+        Intent detailIntent = new Intent(MainActivity.this, DetailsActivity.class);
         detailIntent.putExtra("id", marvels.get(index).getId());
         startActivity(detailIntent);
     }
@@ -118,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
 
         marvels.clear();
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(new InsertPersonAsync(data, getApplicationContext(),this, new AsyncTaskCallback() {
+        executor.execute(new PersonInsertAsync(data, getApplicationContext(),this, new AsyncTaskCallback() {
                 @Override
                 public void handleResponse(Object object) {
                     progressDoalog.dismiss();
