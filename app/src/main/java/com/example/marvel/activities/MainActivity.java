@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
         recyclerView.setAdapter(myAdapter);
         progressDoalog = new ProgressDialog(MainActivity.this);
         progressDoalog.setMessage("Loading....");
-        progressDoalog.show();
+
 
         List <Person> list = personDAO.getAllPersons();
         if (list.size() > 0) {
@@ -68,14 +68,22 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
             marvels.addAll(list);
             myAdapter.notifyDataSetChanged();
         }
+        else {
+            progressDoalog.show();
+        }
+        fetchData();
 
 
+
+    }
+
+    void fetchData () {
         DataService service = NetworkClient.getRetrofitInstance().create(DataService.class);
         Call<List<Person>> call = service.getAllData();
         call.enqueue(new Callback<List<Person>>() {
             @Override
             public void onResponse(Call<List<Person>> call, Response<List<Person>> response) {
-               generateDataList(response.body());
+                generateDataList(response.body());
             }
 
             @Override
@@ -96,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
         if (item.getItemId() == R.id.logout) {
             SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS", MODE_PRIVATE).edit();
             editor.putBoolean("isLogin", false);
@@ -107,6 +116,10 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
             startActivity(intent);
         }
 
+        if (item.getItemId() == R.id.refresh) {
+            progressDoalog.show();
+            fetchData();
+        }
         return super.onOptionsItemSelected(item);
     }
 
