@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.marvel.R;
+import com.facebook.AccessToken;
+
 
 public class StartActivity extends AppCompatActivity {
 
@@ -18,7 +20,12 @@ public class StartActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
         Boolean isLogin = prefs.getBoolean("isLogin", false);
 
-        if (isLogin) {
+
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isFBLoggedIn = accessToken != null && !accessToken.isExpired();
+
+
+        if (isLogin || isFBLoggedIn) {
             Intent detailIntent = new Intent(StartActivity.this, MainActivity.class);
             startActivity(detailIntent);
         }

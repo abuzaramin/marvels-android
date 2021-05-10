@@ -23,6 +23,8 @@ import com.example.marvel.database.Connections;
 import com.example.marvel.interfaces.AsyncTaskCallback;
 import com.example.marvel.interfaces.DataService;
 import com.example.marvel.utils.PersonInsertAsync;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
         if (item.getItemId() == R.id.logout) {
             SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS", MODE_PRIVATE).edit();
             editor.putBoolean("isLogin", false);
+            LoginManager.getInstance().logOut();
             editor.apply();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
