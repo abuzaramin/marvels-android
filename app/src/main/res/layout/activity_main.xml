@@ -11,5 +11,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDonate"
+        android:background="#6200EE"
+        android:text="Donate 5 Rs/-"
+        android:textColor="#F9F9F9"
+        android:layout_weight="0"/>
 </LinearLayout>

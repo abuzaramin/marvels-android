@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.marvel.network.NetworkClient;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
     ArrayList<Person> marvels;
     ProgressDialog progressDoalog;
     PersonDAO personDAO;
+    Button donatButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
         recyclerView = findViewById(R.id.list);
         recyclerView.setHasFixedSize(true);
 
+        donatButton = findViewById(R.id.btnDonate);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -75,8 +79,14 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
         }
         fetchData();
 
-
-
+        donatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
+                intent.putExtra("price", "5");
+                startActivityForResult(intent,0);
+            }
+        });
     }
 
     void fetchData () {
@@ -168,5 +178,23 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Ite
                     }
                 }
         }));
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check that it is the SecondActivity with an OK result
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            // Get String data from Intent
+            String ResponseCode = data.getStringExtra("pp_ResponseCode");
+            System.out.println("DateFn: ResponseCode:" + ResponseCode);
+            if(ResponseCode.equals("000")) {
+                Toast.makeText(getApplicationContext(), "Payment Success", Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Payment Failed", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
